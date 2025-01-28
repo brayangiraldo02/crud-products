@@ -1,0 +1,13 @@
+.sidenav-container {
+  width: auto;
+  height: 100vh;
+  background: #eee;
+}
+
+.left-sidenav-container {
+  width: 15vw;
+  height: 100%;
+  background: #161616;
+  color: #fff;
+  border-radius: 0%;
+}
