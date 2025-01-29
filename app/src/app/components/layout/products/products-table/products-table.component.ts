@@ -98,6 +98,7 @@ export class ProductsTableComponent {
 
   open_dialog_create(): void {
     const dialogRef = this.dialog.open(ProductCreateComponent, {
+      width: '500px',
       data: this.product_create(),
     });
 
@@ -121,6 +122,7 @@ export class ProductsTableComponent {
 
   open_dialog_edit(element: ProductsTable): void {
     const dialogRef = this.dialog.open(ProductEditComponent, {
+      width: '500px',
       data: element,
     });
 

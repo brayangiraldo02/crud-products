@@ -9,13 +9,14 @@
   <p>Ingresa la descripción</p>
   <mat-form-field>
     <mat-label>Descripción</mat-label>
-    <input matInput [(ngModel)]="data.description" />
+    <textarea matInput [(ngModel)]="data.description"></textarea>
   </mat-form-field>
 
   <p>Ingresa el precio</p>
   <mat-form-field>
     <mat-label>Precio</mat-label>
     <input matInput [(ngModel)]="data.price" />
+    
   </mat-form-field>
 
   <p>Ingresa el stock</p>
