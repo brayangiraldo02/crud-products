@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject,  model, signal} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductDeleteComponent } from '../product-delete/product-delete.component';
+import { ProductCreateComponent } from '../product-create/product-create.component';
 
-export interface PeriodicElement {
+export interface ProductsTable {
   name: string;
   id: number;
   price: number;
@@ -13,7 +16,14 @@ export interface PeriodicElement {
   stock: number;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
+export interface ProductCreate {
+  name: string;
+  price: number;
+  description: string;
+  stock: number;
+}
+
+const ELEMENT_DATA: ProductsTable[] = [
   {id: 1, name: 'Hidrogeno', price: 1.0079, description: 'El hidrógeno es el primer elemento de la tabla periódica. Es el elemento químico más ligero que existe, su átomo está formado por un protón y un electrón y es estable en forma de molécula diatómica (H2). En condiciones normales se encuentra en estado gaseoso, y es insípido, incoloro e inodoro.', stock: 10},
   {id: 2, name: 'Helio', price: 4.0026, description: 'Un gas noble con el símbolo atómico He, número atómico 2 y peso atómico 4,003. Es un gas incoloro, inodoro e insípido, no combustible y que no sostiene la combustión.', stock: 20},
   {id: 3, name: 'Litio', price: 6.941, description: 'Tiene el símbolo atómico Li, número atómico 3 y peso atómico [6,938; 6.997]. Las sales de litio se emplean en el tratamiento del TRASTORNO BIPOLAR. Elemento de la familia de metales alcalinos. Tiene el símbolo atómico Li, número atómico 3 y peso atómico.', stock: 30},
@@ -27,17 +37,78 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-products',
+  selector: 'app-products-table',
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatIconModule],
-  templateUrl: './products.component.html',
-  styleUrl: './products.component.css'
+  templateUrl: './products-table.component.html',
+  styleUrl: './products-table.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductsComponent {
+export class ProductsTableComponent {
   displayedColumns: string[] = ['id', 'name', 'price', 'description', 'stock', 'actions'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  applyFilter(event: Event) {
+  readonly dialog = inject(MatDialog);
+
+  readonly animal = signal('');
+  readonly name = model('');
+
+  readonly product_create = signal<ProductCreate>({
+    name: '',
+    price: 0,
+    description: '',
+    stock: 0
+  });
+
+  apply_filter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  open_dialog_delete(id: number, name: string) {
+    const dialogRef = this.dialog.open(ProductDeleteComponent, {
+      data: { id, name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Delete');
+      }
+    });
+  }
+
+  resetProductCreate(): void {
+    this.product_create.set({
+      name: '',
+      price: 0,
+      description: '',
+      stock: 0
+    });
+  }
+
+  open_dialog_create(): void {
+    const dialogRef = this.dialog.open(ProductCreateComponent, {
+      data: this.product_create(),
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        console.log(result);
+      }
+      this.resetProductCreate();
+    });
+  }
+
+  open_dialog_edit(element: ProductsTable): void {
+    const dialogRef = this.dialog.open(ProductCreateComponent, {
+      data: element,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result !== undefined) {
+        console.log(result);
+      }
+    });
   }
 }
