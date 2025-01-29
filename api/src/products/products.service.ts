@@ -6,7 +6,7 @@ import { update_product_dto } from './dto/update_product_dto';
 
 @Injectable()
 export class ProductsService {
-  constructor(private readonly pg_service: pgservice) { }
+  constructor(private readonly pg_service: pgservice) {}
 
   async get_products(): Promise<get_product_dto[]> {
     try {
@@ -76,7 +76,6 @@ export class ProductsService {
         price: result.rows[0].price,
         stock: result.rows[0].stock,
       };
-      console.log(typeof productDto.price);
       return productDto;
     } catch (error) {
       console.error('Error creating product:', error);
@@ -86,21 +85,21 @@ export class ProductsService {
 
   async update_product(
     id: number,
-    prodcut: update_product_dto,
+    product: update_product_dto,
   ): Promise<get_product_dto | null> {
     try {
       let query = `UPDATE product SET `;
-      if (prodcut.name) {
-        query += `name = '${prodcut.name}', `;
+      if (product.name) {
+        query += `name = '${product.name}', `;
       }
-      if (prodcut.description) {
-        query += `description = '${prodcut.description}', `;
+      if (product.description) {
+        query += `description = '${product.description}', `;
       }
-      if (prodcut.price) {
-        query += `price = ${prodcut.price}, `;
+      if (product.price) {
+        query += `price = ${product.price}, `;
       }
-      if (prodcut.stock) {
-        query += `stock = ${prodcut.stock}, `;
+      if (product.stock) {
+        query += `stock = ${product.stock}, `;
       }
       query = query.slice(0, -2);
       query += ` WHERE id = ${id} RETURNING * `;
