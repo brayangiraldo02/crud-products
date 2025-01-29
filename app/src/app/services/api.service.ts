@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Development } from '../environments/development';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+  deps: [HttpClient]
 })
-export class ApiServiceService {
+export class ApiService {
 
   constructor(private http: HttpClient) { }
 
