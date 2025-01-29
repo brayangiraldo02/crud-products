@@ -1,0 +1,16 @@
+/* .example-container {
+  width: auto;
+  height: 100vh;
+  background: #eee;
+} */
+
+.links-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;;
+}
+
+.links-container button {
+  height: 60px;
+}
