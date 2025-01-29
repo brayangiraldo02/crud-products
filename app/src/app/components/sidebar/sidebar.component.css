@@ -5,10 +5,9 @@
 } */
 
 .links-container {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;;
+  padding-top: 20px;
 }
 
 .links-container button {
