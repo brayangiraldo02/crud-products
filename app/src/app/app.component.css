@@ -18,3 +18,7 @@
 .right-sidenav-container {
   background-color: rgb(17, 17, 17);
 }
+
+.router-container {
+  padding: 20px;
+}
