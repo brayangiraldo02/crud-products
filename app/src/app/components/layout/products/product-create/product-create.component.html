@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>Crear Producto</h2>
+<mat-dialog-content>
+  <p>Ingresa el nombre</p>
+  <mat-form-field>
+    <mat-label>Nombre</mat-label>
+    <input matInput [(ngModel)]="data.name" />
+  </mat-form-field>
+
+  <p>Ingresa la descripción</p>
+  <mat-form-field>
+    <mat-label>Descripción</mat-label>
+    <input matInput [(ngModel)]="data.description" />
+  </mat-form-field>
+
+  <p>Ingresa el precio</p>
+  <mat-form-field>
+    <mat-label>Precio</mat-label>
+    <input matInput [(ngModel)]="data.price" />
+  </mat-form-field>
+
+  <p>Ingresa el stock</p>
+  <mat-form-field>
+    <mat-label>Stock</mat-label>
+    <input matInput [(ngModel)]="data.stock" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+  <button mat-button (click)="close()">Cancelar</button>
+</mat-dialog-actions>
