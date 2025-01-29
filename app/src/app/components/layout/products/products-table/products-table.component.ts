@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject,  model, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -7,6 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductDeleteComponent } from '../product-delete/product-delete.component';
 import { ProductCreateComponent } from '../product-create/product-create.component';
+import { ProductEditComponent } from '../product-edit/product-edit.component';
 import { ApiService } from '../../../../services/api.service';
 
 export interface ProductsTable {
@@ -29,7 +30,6 @@ export interface ProductCreate {
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatIconModule],
   templateUrl: './products-table.component.html',
   styleUrl: './products-table.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsTableComponent {
   displayedColumns: string[] = ['id', 'name', 'price', 'description', 'stock', 'actions'];
@@ -81,7 +81,7 @@ export class ProductsTableComponent {
       if (result) {
         console.log(`Delete ${id}`);
         this.api.delete_data(`products/${id}`).subscribe(() => {
-          window.location.reload();
+          this.get_products();
         });
       }
     });
@@ -112,7 +112,7 @@ export class ProductsTableComponent {
           stock: Number(result.stock)
         };
         this.api.post_data('products', data).subscribe(() => {
-          window.location.reload();
+          this.get_products();
         });
       }
       this.resetProductCreate();
@@ -120,7 +120,7 @@ export class ProductsTableComponent {
   }
 
   open_dialog_edit(element: ProductsTable): void {
-    const dialogRef = this.dialog.open(ProductCreateComponent, {
+    const dialogRef = this.dialog.open(ProductEditComponent, {
       data: element,
     });
 
@@ -134,7 +134,7 @@ export class ProductsTableComponent {
           stock: Number(result.stock)
         };
         this.api.patch_data(`products/${element.id}`, data).subscribe(() => {
-          window.location.reload();
+          this.get_products();
         });
         console.log(result);
       }

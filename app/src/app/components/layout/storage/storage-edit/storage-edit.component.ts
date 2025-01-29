@@ -13,7 +13,7 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-product-edit',
+  selector: 'app-storage-edit',
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -24,11 +24,11 @@ export interface DialogData {
     MatDialogActions,
     MatDialogClose,
   ],
-  templateUrl: './product-edit.component.html',
-  styleUrl: './product-edit.component.css'
+  templateUrl: './storage-edit.component.html',
+  styleUrl: './storage-edit.component.css'
 })
-export class ProductEditComponent {
-  readonly dialogRef = inject(MatDialogRef<ProductEditComponent>);
+export class StorageEditComponent {
+  readonly dialogRef = inject(MatDialogRef<StorageEditComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
   
   close(): void {
