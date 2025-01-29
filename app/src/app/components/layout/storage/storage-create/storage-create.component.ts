@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, model, inject } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-product-edit',
+  selector: 'app-storage-create',
   imports: [
     MatFormFieldModule,
     MatInputModule,
@@ -24,13 +24,13 @@ export interface DialogData {
     MatDialogActions,
     MatDialogClose,
   ],
-  templateUrl: './product-edit.component.html',
-  styleUrl: './product-edit.component.css'
+  templateUrl: './storage-create.component.html',
+  styleUrl: './storage-create.component.css'
 })
-export class ProductEditComponent {
-  readonly dialogRef = inject(MatDialogRef<ProductEditComponent>);
+export class StorageCreateComponent {
+  readonly dialogRef = inject(MatDialogRef<StorageCreateComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
-  
+
   close(): void {
     this.dialogRef.close();
   }
