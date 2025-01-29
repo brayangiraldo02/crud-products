@@ -97,6 +97,7 @@ export class StorageTableComponent {
   
     open_dialog_create(): void {
       const dialogRef = this.dialog.open(StorageCreateComponent, {
+        width: '500px',
         data: this.product_create(),
       });
   
@@ -120,6 +121,7 @@ export class StorageTableComponent {
   
     open_dialog_edit(element: ProductsTable): void {
       const dialogRef = this.dialog.open(StorageEditComponent, {
+        width: '500px',
         data: element,
       });
   
