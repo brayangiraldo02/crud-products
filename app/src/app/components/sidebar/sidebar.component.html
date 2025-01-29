@@ -5,12 +5,18 @@
 
 <div class="links-container">
   
-  <button mat-button routerLink="/products">
+  <button mat-button 
+          routerLink="/products"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>table_chart</mat-icon>
     Productos
   </button>
 
-  <button mat-button routerLink="/storage">
+  <button mat-button 
+          routerLink="/storage"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>storage</mat-icon>
     Almacenamiento
   </button>
