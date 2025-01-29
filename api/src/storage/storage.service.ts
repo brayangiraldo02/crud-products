@@ -6,7 +6,7 @@ import { update_storage_dto } from './dto/update_storage_dto';
 
 @Injectable()
 export class StorageService {
-  constructor(private readonly pg_service: pgservice) { }
+  constructor(private readonly pg_service: pgservice) {}
 
   async get_storages(): Promise<get_storage_dto[]> {
     try {
@@ -15,15 +15,17 @@ export class StorageService {
         rows: Storage[];
       };
 
-      const StoragesDto: get_storage_dto[] = result.rows.map((storage) => {
+      const storagesDto: get_storage_dto[] = result.rows.map((storage) => {
         return {
           id: storage.id,
-          location: storage.location,
-          quantity: storage.quantity,
+          name: storage.name,
+          description: storage.description,
+          price: storage.price,
+          stock: storage.stock,
         };
       });
 
-      return StoragesDto;
+      return storagesDto;
     } catch (error) {
       console.error('Error fetching storage:', error);
       return [];
@@ -43,8 +45,10 @@ export class StorageService {
 
       const storageDto: get_storage_dto = {
         id: result.rows[0].id,
-        location: result.rows[0].location,
-        quantity: result.rows[0].quantity,
+        name: result.rows[0].name,
+        description: result.rows[0].description,
+        price: result.rows[0].price,
+        stock: result.rows[0].stock,
       };
       return storageDto;
     } catch (error) {
@@ -57,15 +61,20 @@ export class StorageService {
     storage: create_storage_dto,
   ): Promise<get_storage_dto | null> {
     try {
-      const query = `INSERT INTO storage (location, quantity) VALUES(
-        '${storage.location}', '${storage.quantity}') RETURNING * `;
+      const query = `INSERT INTO storage (name, description, price, stock) VALUES(
+        '${storage.name}',
+        '${storage.description}',
+        ${storage.price},
+        ${storage.stock}) RETURNING * `;
       const result = (await this.pg_service.query(query)) as {
         rows: Storage[];
       };
       const storageDto: get_storage_dto = {
         id: result.rows[0].id,
-        location: result.rows[0].location,
-        quantity: result.rows[0].quantity,
+        name: result.rows[0].name,
+        description: result.rows[0].description,
+        price: result.rows[0].price,
+        stock: result.rows[0].stock,
       };
       return storageDto;
     } catch (error) {
@@ -80,11 +89,17 @@ export class StorageService {
   ): Promise<get_storage_dto | null> {
     try {
       let query = `UPDATE storage SET `;
-      if (storage.location) {
-        query += `name = '${storage.location}', `;
+      if (storage.name) {
+        query += `name = '${storage.name}', `;
       }
-      if (storage.quantity) {
-        query += `description = '${storage.quantity}', `;
+      if (storage.description) {
+        query += `description = '${storage.description}', `;
+      }
+      if (storage.price) {
+        query += `price = ${storage.price}, `;
+      }
+      if (storage.stock) {
+        query += `stock = ${storage.stock}, `;
       }
       query = query.slice(0, -2);
       query += ` WHERE id = ${id} RETURNING * `;
@@ -96,8 +111,10 @@ export class StorageService {
       }
       const storageDto: get_storage_dto = {
         id: result.rows[0].id,
-        location: result.rows[0].location,
-        quantity: result.rows[0].quantity,
+        name: result.rows[0].name,
+        description: result.rows[0].description,
+        price: result.rows[0].price,
+        stock: result.rows[0].stock,
       };
       return storageDto;
     } catch (error) {
