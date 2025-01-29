@@ -61,11 +61,11 @@ export class ProductsService {
     product: create_product_dto,
   ): Promise<get_product_dto | null> {
     try {
-      const query = `INSERT INTO product (name, description, price, stock, status) VALUES (
-                    '${product.name}', 
-                    '${product.description}', 
-                    ${product.price}, 
-                    ${product.stock},true) RETURNING *`;
+      const query = `INSERT INTO product (name, description, price, stock, status) VALUES(
+        '${product.name}',
+        '${product.description}',
+        ${product.price},
+        ${product.stock}, true) RETURNING * `;
       const result = (await this.pg_service.query(query)) as {
         rows: Product[];
       };
@@ -81,19 +81,6 @@ export class ProductsService {
     } catch (error) {
       console.error('Error creating product:', error);
       return null;
-    }
-  }
-
-  async exist_product(id: number): Promise<boolean> {
-    try {
-      const query = `SELECT 1 FROM product WHERE id = $1 AND status = true`;
-      const result = (await this.pg_service.query(query, [id])) as {
-        rows: { exists: boolean }[];
-      };
-      return result.rows.length > 0;
-    } catch (error) {
-      console.error('Error verifying product:', error);
-      return false;
     }
   }
 
@@ -116,7 +103,7 @@ export class ProductsService {
         query += `stock = ${prodcut.stock}, `;
       }
       query = query.slice(0, -2);
-      query += ` WHERE id = ${id} RETURNING *`;
+      query += ` WHERE id = ${id} RETURNING * `;
       const result = (await this.pg_service.query(query)) as {
         rows: Product[];
       };
@@ -139,7 +126,7 @@ export class ProductsService {
 
   async verify_delete(id: number): Promise<boolean> {
     try {
-      const query = `SELECT status FROM product WHERE id = $1`;
+      const query = `SELECT status FROM product WHERE id = $1 `;
       const result = (await this.pg_service.query(query, [id])) as {
         rows: { status: boolean }[];
       };
@@ -157,7 +144,7 @@ export class ProductsService {
 
   async delete_prodcut(id: number): Promise<boolean> {
     try {
-      const query = `UPDATE product SET status = false WHERE id = ${id} RETURNING *`;
+      const query = `UPDATE product SET status = false WHERE id = ${id} RETURNING * `;
       const result = (await this.pg_service.query(query)) as {
         rows: Product[];
       };
