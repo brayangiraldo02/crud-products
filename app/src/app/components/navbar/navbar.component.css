@@ -2,4 +2,9 @@ mat-toolbar {
   display: flex;
   justify-content: center;
   color: #FFABF3;
+  background: #161616;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  border-bottom: 1px solid gray;
 }
