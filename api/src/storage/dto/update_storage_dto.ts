@@ -1,16 +1,30 @@
-import { IsNumber, IsString, IsOptional } from 'class-validator';
+import { IsNumber, IsString, IsOptional, Max, Min } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class update_storage_dto {
-  @ApiProperty({ description: 'location' })
-  @ApiPropertyOptional({ description: 'location' })
+  @ApiProperty({ description: 'Name of the product' })
+  @ApiPropertyOptional({ description: 'Name of the product' })
   @IsString()
   @IsOptional()
-  location: string;
+  name: string;
 
-  @ApiProperty({ description: 'quantity' })
-  @ApiPropertyOptional({ description: 'quantity' })
+  @ApiProperty({ description: 'Description of the product' })
+  @ApiPropertyOptional({ description: 'Description of the product' })
+  @IsString()
+  @IsOptional()
+  description: string;
+
+  @ApiProperty({ description: 'Price of the product' })
+  @ApiPropertyOptional({ description: 'Price of the product' })
+  @IsNumber()
+  @Min(0)
+  @Max(999999.99)
+  @IsOptional()
+  price: number;
+
+  @ApiProperty({ description: 'Stock of the product' })
+  @ApiPropertyOptional({ description: 'Stock of the product' })
   @IsNumber()
   @IsOptional()
-  quantity: number;
+  stock: number;
 }

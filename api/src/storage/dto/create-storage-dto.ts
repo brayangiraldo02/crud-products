@@ -1,13 +1,24 @@
-import { IsNumber, IsString, MinLength } from 'class-validator';
+import { IsNumber, IsString, Max, Min, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class create_storage_dto {
-  @ApiProperty({ description: 'location' })
+  @ApiProperty({ description: 'Name of the product' })
   @IsString()
   @MinLength(1)
-  location: string;
+  name: string;
 
-  @ApiProperty({ description: 'quantity' })
+  @ApiProperty({ description: 'Description of the product' })
+  @IsString()
+  @MinLength(1)
+  description: string;
+
+  @ApiProperty({ description: 'Price of the product' })
   @IsNumber()
-  quantity: number;
+  @Min(0)
+  @Max(999999.99)
+  price: number;
+
+  @ApiProperty({ description: 'Stock of the product' })
+  @IsNumber()
+  stock: number;
 }

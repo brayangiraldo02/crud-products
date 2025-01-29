@@ -1,7 +1,9 @@
 export interface Storage {
   id: number;
-  location: string;
-  quantity: number;
+  name: string;
+  description: string;
+  stock: number;
+  price: number;
   status: boolean;
   created_at: Date;
   updated_at: Date;
