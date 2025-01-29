@@ -84,6 +84,19 @@ export class ProductsService {
     }
   }
 
+  async exist_product(id: number): Promise<boolean> {
+    try {
+      const query = `SELECT 1 FROM product WHERE id = $1 AND status = true`;
+      const result = (await this.pg_service.query(query, [id])) as {
+        rows: { exists: boolean }[];
+      };
+      return result.rows.length > 0;
+    } catch (error) {
+      console.error('Error verifying product:', error);
+      return false;
+    }
+  }
+
   async update_product(
     id: number,
     prodcut: update_product_dto,
