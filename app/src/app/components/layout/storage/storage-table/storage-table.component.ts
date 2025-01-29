@@ -58,7 +58,7 @@ export class StorageTableComponent {
     }
   
     get_products() {
-      this.api.get_data('products').subscribe((data) => {
+      this.api.get_data('storage').subscribe((data) => {
         console.log(data);
         this.products = data;
         console.log(this.products);
@@ -79,7 +79,7 @@ export class StorageTableComponent {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           console.log(`Delete ${id}`);
-          this.api.delete_data(`products/${id}`).subscribe(() => {
+          this.api.delete_data(`storage/${id}`).subscribe(() => {
             window.location.reload();
           });
         }
@@ -110,7 +110,7 @@ export class StorageTableComponent {
             description: result.description,
             stock: Number(result.stock)
           };
-          this.api.post_data('products', data).subscribe(() => {
+          this.api.post_data('storage', data).subscribe(() => {
             window.location.reload();
           });
         }
@@ -132,7 +132,7 @@ export class StorageTableComponent {
             description: result.description,
             stock: Number(result.stock)
           };
-          this.api.patch_data(`products/${element.id}`, data).subscribe(() => {
+          this.api.patch_data(`storage/${element.id}`, data).subscribe(() => {
             window.location.reload();
           });
           console.log(result);
