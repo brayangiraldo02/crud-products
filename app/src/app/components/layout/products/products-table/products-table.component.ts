@@ -81,7 +81,6 @@ export class ProductsTableComponent {
       if (result) {
         console.log(`Delete ${id}`);
         this.api.delete_data(`products/${id}`).subscribe(() => {
-          console.log('Deleted');
           window.location.reload();
         });
       }
@@ -106,6 +105,15 @@ export class ProductsTableComponent {
       console.log('The dialog was closed');
       if (result !== undefined) {
         console.log(result);
+        const data = {
+          name: result.name,
+          price: Number(result.price),
+          description: result.description,
+          stock: Number(result.stock)
+        };
+        this.api.post_data('products', data).subscribe(() => {
+          window.location.reload();
+        });
       }
       this.resetProductCreate();
     });
@@ -119,6 +127,15 @@ export class ProductsTableComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if (result !== undefined) {
+        const data = {
+          name: result.name,
+          price: Number(result.price),
+          description: result.description,
+          stock: Number(result.stock)
+        };
+        this.api.patch_data(`products/${element.id}`, data).subscribe(() => {
+          window.location.reload();
+        });
         console.log(result);
       }
     });
